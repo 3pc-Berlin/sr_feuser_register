@@ -628,11 +628,11 @@ class Marker
 		$markerArray['###FORM_NAME###'] = $this->conf['formName'] ?: $form;
 
 		$unsetVarsList = 'mode,pointer,sort,sword,submit,doNotSave,countryChange,fileDelete,key';
-		$unsetVars = GeneralUtility::trimExplode(',', $unsetVarsList);	
+		$unsetVars = GeneralUtility::trimExplode(',', $unsetVarsList);
 		$ac = $this->parameters->getFeUserData('aC');
 		if ($ac) {
 			$vars['aC'] = $ac;
-		}	
+		}
 		$vars['token'] = $this->token;
 		$vars['backURL'] = rawurlencode($formUrl);
 		$vars['cmd'] = 'delete';
@@ -674,7 +674,7 @@ class Marker
 		$markerArray['###TERMS_URL###'] = UrlUtility::get($this->prefixId, '', $termsUrlParam, array(), array(), false);
 
 		$formUrlMarkerArray = $this->generateFormURLMarkers();
-		$markerArray = array_merge($markerArray, $formUrlMarkerArray);	
+		$markerArray = array_merge($markerArray, $formUrlMarkerArray);
 		$this->setUrlMarkerArray($markerArray);
 		$this->setMarkerArray(array_merge($this->getMarkerArray(), $markerArray));
 	}
@@ -1013,7 +1013,7 @@ class Marker
 			foreach ($fieldArray as $theField) {
 				$value = $dataArray[$theField];
 				if (is_array($value)) {
-					$fieldConfig = $GLOBALS['TCA'][$this->theTable]['columns'][$theField]['config']; 
+					$fieldConfig = $GLOBALS['TCA'][$this->theTable]['columns'][$theField]['config'];
 					if ($fieldConfig['type'] === 'inline' && $fieldConfig['foreign_table'] === 'sys_file_reference') {
 						$value = htmlspecialchars(serialize($value));
 					} else {
@@ -1375,7 +1375,7 @@ class Marker
 								}
 								break;
 							case 'radio':
-								if ($mrow[$colName] !== '') {
+								if ($mrow[$colName] !== '' && $mrow[$colName] !== null) {
 									$valuesArray = is_array($mrow[$colName]) ? $mrow[$colName] : explode(',', $mrow[$colName]);
 									if ($colConfig['itemsProcFunc']) {
 										$itemArray = GeneralUtility::callUserFunction($colConfig['itemsProcFunc'], $colConfig, $this);
@@ -1400,7 +1400,7 @@ class Marker
 								}
 								break;
 							case 'select':
-								if ($mrow[$colName] != '') {
+								if ($mrow[$colName] !== '' && $mrow[$colName] !== null) {
 									$valuesArray = is_array($mrow[$colName]) ? $mrow[$colName] : explode(',', $mrow[$colName]);
 									if ($colConfig['itemsProcFunc']) {
 										$itemArray = GeneralUtility::callUserFunction($colConfig['itemsProcFunc'], $colConfig, $this);
@@ -1788,7 +1788,7 @@ class Marker
 	{
 		$foreignWhere = $colConfig['foreign_table_where'];
 		if ($foreignWhere) {
-			$pageTSConfig = $GLOBALS['TSFE']->getPagesTSconfig();	
+			$pageTSConfig = $GLOBALS['TSFE']->getPagesTSconfig();
 			$TSconfig = $pageTSConfig['TCEFORM.'][$this->theTable . '.'][$colName . '.'];
 			if ($TSconfig) {
 				// substitute whereClause

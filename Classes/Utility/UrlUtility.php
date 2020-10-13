@@ -68,7 +68,7 @@ class UrlUtility
 		}
 		$piVars = array();
 		foreach ($vars as $key => $val) {
-			$piVars[$prefixId . '%5B' . $key . '%5D'] = $val;
+			$piVars[$prefixId . '[' . $key . ']'] = $val;
 		}
 		$url = $tag ? self::$cObj->getTypoLink($tag, $id, $piVars) : self::$cObj->getTypoLink_URL($id, $piVars);
 		$url = htmlspecialchars(str_replace(array('[',']'), array('%5B', '%5D'), $url));
